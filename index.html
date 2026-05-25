@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>Дневник настроения-Хаос и порядок</h1>
+        <div class="header-controls">
+            <button id="themeToggl" class="btn-black">Темный тема🌙</button>
+            <div class="authButtons"></div>
+            <button id="loginBtn" class="btn-outline">Войти</button>
+            <button id="registBtn" class="btn-outline">Зарегистрироватся</button>
+        </div>
+        <div id="userInfo" class="hidden">
+            <span class="loggetUserEmail"></span>
+            <button class="btn-outline" id="logoutBtn">Выйти</button>
+        </div>
+    </header>
+
+    <main class="hidden" id="mainConten">
+        <section class="add-section">
+            <h2>Новая запись</h2>
+            <form class="entryForm">
+                <label>Оценка настроения</label>
+                <div class="mood-group">
+                    <button class="data-mood1">😊</button>
+                    <button class="data-mood2">😭</button>
+                    <button class="data-mood3">😴</button>
+                    <button class="data-mood4">🤩</button>
+                    <button class="data-mood5">😓</button>
+                </div>
+                <label for="note"> до 200 символов</label>
+                <textarea id="note" maxlength="200"
+                    placeholder="Открой не свою душу я единственный кто может тебя понять"></textarea>
+                <div class="date field">
+                    <label for="entryDate">
+                        <input type="date" name="" id="entryDate">
+                    </label>
+                </div>
+                <button type="button" id="addEntryBtn" class="btn-primary">Сохранить запись</button>
+            </form>
+        </section>
+
+        <section class="static-section">
+            <h2>Статистика</h2>
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <h3>Максимум</h3>
+                    <p class="stat-value" id="maxMood">0</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Минимум</h3>
+                    <p class="stat-value" id="minMood">0</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Колебания за 7 дней</h3>
+                    <p class="stat-value" id="colebania">0</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Самый лучший день</h3>
+                    <p class="stat-value" id="bestDay">?</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Самый худший день</h3>
+                    <p class="stat-value" id="worsDay">?</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Самый активный день</h3>
+                    <p class="stat-value" id="mostActiveDay">?</p>
+                </article>
+                <article class="stat-card">
+                    <h3>Итоговое состояние</h3>
+                    <p class="stat-value" id="emotionalSummary">?</p>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="histori-section">
+            <h2>История записей</h2>
+            <form class="filter-form" id="filter-form">
+                <label id="startDate">Период</label>
+                <input type="date" id="startDate">
+                <span>-</span>
+                <input type="date" id="endData">
+                <button type="button" class="btn-secondary" id="filterBtn">Показать</button>
+            </form>
+            <div id="historyList" class="history-list"></div>
+        </section>
+
+        <section class="charts-section">
+            <h2>Динамика настроения</h2>
+            <canvas id="moodCharts" width="700" height="300"></canvas>
+
+        </section>
+
+        <section class="charts-section">
+            <h2>Распределение настроений</h2>
+            <div class="pieChartWrapper">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <button type="button" id="updatePieBtn" class="btn-secondary">Обновить Диаграмму</button>
+        </section>
+
+        <section class="controls-section">
+            <button type="button" id="clearAllBtn" class="btn-delete">Очистить все</button>
+            <button type="button" id="sampleDataBtn" class="btn-primer">Загрузить пример</button>
+        </section>
+    </main>
+
+
+    <article id="preLoginMessage" class="welcome-section">
+        <h2>Добро пожаловать!</h2>
+        <p>Пожалуйста, войдите или зарегистрируйтесь, чтобы начать вести дневник настроения.</p>
+    </article>
+
+    <dialog id="registerModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" data-modal="registerModal">&times;</button>
+            <h3>Регистрация</h3>
+            <form>
+                <input type="email" id="regEmail" placeholder="Email" class="modal-input">
+                <input type="password" id="regPassword" placeholder="Пароль" class="modal-input">
+                <input type="text" id="regName" placeholder="Ваше имя" class="modal-input">
+                <button id="doRegisterBtn" class="btn-primary">Зарегистрироваться</button>
+                <p id="regMessage" class="modal-message"></p>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" data-modal="loginModal">&times;</button>
+            <h3>Вход</h3>
+            <form>
+                <input type="email" id="loginEmail" placeholder="Email" class="modal-input">
+                <input type="password" id="loginPassword" placeholder="Пароль" class="modal-input">
+                <button id="doLoginBtn" class="btn-primary">Войти</button>
+                <p id="loginMessage" class="modal-message"></p>
+            </form>
+        </div>
+    </dialog>
+
+    <div id="toastMessage" class="toast"></div>
+
+    <footer class="page-footer">
+        <h3>Дневник настроения Хаос и порядок</h3>
+        <p>наш адрес Финляндский пер., 1</p>
+        <a href="https://yandex.ru/profile/116157949931?lang=ru">Мы на карте</a>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="main.js"></script>
+
+    <!-- <script>
+(function() {
+    const savedUser = localStorage.getItem('mood_current_user');
+    if (savedUser) {
+    document.body.classList.add('logged-in');
+    }
+})(); -->
+    </script>
+</body>
+
+</html>
