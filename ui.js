@@ -243,42 +243,48 @@ export class UI {
         if (this.mostActiveDaySpan) this.mostActiveDaySpan.textContent = stats.mostActiveDay;
         if (this.emotionalSummarySpan) this.emotionalSummarySpan.textContent = stats.emotionalSummary;
     }
-
-    updateHistory() {
-        if (!this.diary.currentUser) {
-            if (this.historyListDiv) this.historyListDiv.innerHTML = '<p>Войдите, чтобы видеть историю</p>';
-            return;
-        }
-        const start = this.startDateInput?.value;
-        const end = this.endDateInput?.value;
-        let entries = this.diary.getEntriesByPeriod(start, end);
-        if (entries.length === 0) {
-            this.historyListDiv.innerHTML = '<p>Нет записей</p>';
-            return;
-        }
-        entries = [...entries].reverse();
-        const moodIcon = (m) => `<img src="icons/${m}.png" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;">`;
-        let html = '';
-        for (let e of entries) {
-            html += `
-                <div class="history-item">
-                    <div class="history-date">📅 ${e.date}</div>
-                    <div class="history-mood">${moodIcon(e.mood)} Оценка: ${e.mood}/5</div>
-                    <div class="history-note">📝 ${this.escapeHtml(e.note)}</div>
-                   <div class="history-actions">
-                   <button class="delete-entry" data-date="${e.date}">🗑️</button>
-                 </div>
-                </div>
-            `;
-        }
-        this.historyListDiv.innerHTML = html;
-        document.querySelectorAll('.edit-entry').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.preventDefault(); this.editEntry(btn.dataset.date); });
-        });
-        document.querySelectorAll('.delete-entry').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.preventDefault(); this.deleteEntry(btn.dataset.date); });
-        });
+updateHistory() {
+    if (!this.diary.currentUser) {
+        if (this.historyListDiv) this.historyListDiv.innerHTML = '<p>Войдите, чтобы видеть историю</p>';
+        return;
     }
+    const start = this.startDateInput?.value;
+    const end = this.endDateInput?.value;
+    let entries = this.diary.getEntriesByPeriod(start, end);
+    if (entries.length === 0) {
+        this.historyListDiv.innerHTML = '<p>Нет записей</p>';
+        return;
+    }
+    entries = [...entries].reverse();
+    
+    // ТОЛЬКО ЭТО ИЗМЕНЕНИЕ - для mood=1 используем .gif, для остальных .png
+    const moodIcon = (m) => {
+        const ext = (m === 1) ? 'gif' : 'png';
+        return `<img src="icons/${m}.${ext}" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;">`;
+    };
+    
+    let html = '';
+    for (let e of entries) {
+        html += `
+            <div class="history-item">
+                <div class="history-date">📅 ${e.date}</div>
+                <div class="history-mood">${moodIcon(e.mood)} Оценка: ${e.mood}/5</div>
+                <div class="history-note">📝 ${this.escapeHtml(e.note)}</div>
+                <div class="history-actions">
+                    <button class="delete-entry" data-date="${e.date}">🗑️</button>
+                </div>
+            </div>
+        `;
+    }
+    this.historyListDiv.innerHTML = html;
+    
+    document.querySelectorAll('.edit-entry').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); this.editEntry(btn.dataset.date); });
+    });
+    document.querySelectorAll('.delete-entry').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); this.deleteEntry(btn.dataset.date); });
+    });
+}
 
     editEntry(date) {
         const entry = this.diary.entries.find(e => e.date === date);

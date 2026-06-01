@@ -236,7 +236,7 @@ input[type="date"] {
 .stat-card h3 {
     font-size: 0.9rem;
     font-weight: 500;
-    color: #5f6c80;
+    /* color: #5f6c80; */
     margin-bottom: 8px;
 }
 
@@ -412,7 +412,7 @@ canvas {
     max-width: 1200px;
     margin: 30px auto 10px;
     text-align: center;
-    color: #4a5568;
+    color: #ffffff;
     font-size: 0.8rem;
     padding: 15px;
     border-top: 1px solid #ddd;
@@ -584,6 +584,8 @@ body.dark,
 body.dark.logged-in {
     background: #121212;
 }
+
+
 
 
 
