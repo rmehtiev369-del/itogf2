@@ -243,7 +243,7 @@ input[type="date"] {
 .stat-value {
     font-size: 1.7rem;
     font-weight: bold;
-    color: #2c3e66;
+    color: #000103;
 }
 
 .button-group {
@@ -321,9 +321,16 @@ canvas {
 }
 
 .pieChartWrapper {
-    display: flex;
+display: flex;
     justify-content: center;
-    height: 800px;
+    max-width: 700px;
+    margin: 0 auto;
+    height: auto;
+}
+
+#pieChart {
+    max-width: 100%;
+    height: auto !important;
 }
 
 .modal {
@@ -483,6 +490,10 @@ body.dark .modal-content {
     margin-top: 5px;
 }
 
+.loggetUserEmail{
+    margin: 15px;
+}
+
 
 
 .mood-btn.active {
@@ -585,6 +596,14 @@ body.dark.logged-in {
     background: #121212;
 }
 
+body.dark .stat-value {
+    color: #ffffff; /* белый */
+}
+
+body.dark .loggetUserEmail {
+    color: #ffffff; /* белый */
+    /* margin: 15px; */
+}
 
 
 
