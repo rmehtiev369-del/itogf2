@@ -278,7 +278,7 @@ updateHistory() {
                 <div class="history-mood">${moodIcon(e.mood)} Оценка: ${e.mood}/5</div>
                 <div class="history-note">📝 ${this.escapeHtml(e.note)}</div>
                 <div class="history-actions">
-                    <button class="delete-entry" data-date="${e.date}">🗑️</button>
+                <button class="delete-entry" data-id="${e.id}">🗑️</button>
                 </div>
             </div>
         `;
@@ -289,12 +289,12 @@ updateHistory() {
         btn.addEventListener('click', (e) => { e.preventDefault(); this.editEntry(btn.dataset.date); });
     });
     document.querySelectorAll('.delete-entry').forEach(btn => {
-        btn.addEventListener('click', (e) => { e.preventDefault(); this.deleteEntry(btn.dataset.date); });
+        btn.addEventListener('click', (e) => { e.preventDefault(); this.deleteEntry(btn.dataset.id); });
     });
 }
 
-    editEntry(date) {
-        const entry = this.diary.entries.find(e => e.date === date);
+    editEntry(id) {
+        const entry = this.diary.entries.find(e => e.id === id);
         if (entry) {
             this.entryDate.value = entry.date;
             this.noteTextarea.value = entry.note;
@@ -305,15 +305,15 @@ updateHistory() {
                     btn.classList.add('active');
                 } else btn.classList.remove('active');
             });
-            this.diary.deleteEntry(date);
+            this.diary.deleteEntry(id);
             this.refreshAll();
             this.showToast('Теперь измените и сохраните');
         }
     }
 
-    deleteEntry(date) {
-        if (confirm(`Удалить запись за ${date}?`)) {
-            this.diary.deleteEntry(date);
+    deleteEntry(id) {
+        if (confirm(`Удалить запись за ${id}?`)) {
+            this.diary.deleteEntry(id);
             this.refreshAll();
             this.showToast('Запись удалена');
         }
