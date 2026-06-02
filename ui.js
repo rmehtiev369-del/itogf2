@@ -19,6 +19,8 @@ export class UI {
         this.preLoginMessage = document.getElementById('preLoginMessage');
         this.userInfoDiv = document.getElementById('userInfo');
         this.loggedUserSpan = document.querySelector('.loggetUserEmail');
+        this.wisdomText = document.getElementById('wisdomText');
+        this.wisdomBtn = document.getElementById('wisdomBtn');
 
         this.registerModal = document.getElementById('registerModal');
         this.loginModal = document.getElementById('loginModal');
@@ -157,6 +159,9 @@ export class UI {
                 btn.classList.add('active');
             });
         });
+        if (this.wisdomBtn) {
+    this.wisdomBtn.addEventListener('click', () => this.loadWisdom());
+}
     }
 
     showRegisterModal() { if (this.registerModal) this.registerModal.style.display = 'flex'; }
@@ -211,7 +216,8 @@ export class UI {
             if (this.preLoginMessage) this.preLoginMessage.style.display = 'none';
             if (this.loginBtn) this.loginBtn.style.display = 'none';
             if (this.registerBtn) this.registerBtn.style.display = 'none';
-            document.body.classList.add('logged-in');
+            document.body.classList.add('logged-in'); 
+        this.loadWisdom()
         } else {
             if (this.userInfoDiv) this.userInfoDiv.style.display = 'none';
             if (this.mainContent) this.mainContent.classList.add('hidden');
@@ -219,6 +225,7 @@ export class UI {
             if (this.loginBtn) this.loginBtn.style.display = 'inline-block';
             if (this.registerBtn) this.registerBtn.style.display = 'inline-block';
             document.body.classList.remove('logged-in');
+            
         }
     }
 
@@ -470,4 +477,25 @@ resetForm() {
         div.textContent = str;
         return div.innerHTML;
     }
+
+    async fetchRandomQuote() {
+    try {
+        const response = await fetch('https://quoteslate.vercel.app/api/quotes/random');
+        const data = await response.json();
+        return `«${data.quote}» — ${data.author}`;
+    } catch (error) {
+        return '«Сложность — это задача, которую ещё не решили» — Мудрость дня';
+    }
+}
+
+async loadWisdom() {
+    if (!this.wisdomText) return;
+    if (!this.diary.currentUser) {
+        this.wisdomText.textContent = 'Войдите, чтобы увидеть мудрость дня';
+        return;
+    }
+    this.wisdomText.textContent = '✨ Загрузка...';
+    const quote = await this.fetchRandomQuote();
+    this.wisdomText.textContent = quote;
+}
 }

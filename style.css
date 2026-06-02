@@ -597,12 +597,28 @@ body.dark.logged-in {
 }
 
 body.dark .stat-value {
-    color: #ffffff; /* белый */
+    color: #ffffff; 
 }
 
 body.dark .loggetUserEmail {
-    color: #ffffff; /* белый */
+    color: #ffffff; 
     /* margin: 15px; */
+}
+
+
+
+
+
+.wisdom-text {
+    font-size: 0.95rem !important;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+.wisdom-btn {
+    margin-top: 8px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
 }
 
 
