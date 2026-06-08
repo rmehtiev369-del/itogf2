@@ -96,13 +96,14 @@ export class MoodDiary {
         }
     }
 
-    getEntriesByPeriod(start, end) {
-        return this.entries.filter(e => {
-            if (start && e.date < start) return false;
-            if (end && e.date > end) return false;
-            return true;
-        });
-    }
+getEntriesByPeriod(start, end) {
+    if (!start && !end) return this.entries;
+    return this.entries.filter(e => {
+        if (start && e.date < start) return false;
+        if (end && e.date > end) return false;
+        return true;
+    });
+}
 
     getStats(entries) {
         if (entries.length === 0) {

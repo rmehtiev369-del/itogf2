@@ -524,7 +524,7 @@ body.dark .stat-card {
 }
 
 body.dark label,
-h2 {
+body.dark h2 {
     color: white;
 }
 
@@ -622,6 +622,20 @@ body.dark .loggetUserEmail {
 }
 
 
+.page-header h1,
+.page-footer,
+.welcome-section p,
+.address-text {
+    color: #1a1a2e !important;
+}
+
+
+body.dark .page-header h1,
+body.dark .page-footer,
+body.dark .welcome-section p,
+body.dark .address-text {
+    color: #e0e0e0 !important;
+}
 
 
 @media (max-width: 700px) {

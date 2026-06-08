@@ -49,13 +49,13 @@ export class UI {
         // this.refreshStatsBtn = document.getElementById('btn-secondary');
 
         this.startDateInput = document.getElementById('startDate');
-        this.endDateInput = document.getElementById('endData');
+        this.endDateInput = document.getElementById('endDate');
         this.filterBtn = document.getElementById('filterBtn');
         this.historyListDiv = document.getElementById('historyList');
 
         this.moodChartCanvas = document.getElementById('moodCharts');
         this.pieChartCanvas = document.getElementById('pieChart');
-        this.updateChartBtn = document.getElementById('updateChartBtn');
+        // this.updateChartBtn = document.getElementById('updateChartBtn');
         this.updatePieBtn = document.getElementById('updatePieBtn');
 
         this.clearAllBtn = document.getElementById('clearAllBtn');
